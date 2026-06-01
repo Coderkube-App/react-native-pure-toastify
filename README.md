@@ -4,6 +4,12 @@ A highly customizable, 60FPS fluid swipe-to-dismiss toast notification system fo
 
 Inspired by `react-toastify`, it is built with **zero external dependencies** and is **100% compatible** with Expo Go and React Native Bare workflows out-of-the-box.
 
+## 🎬 Demo
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Coderkube-App/react-native-pure-toastify/main/assets/pure_toastify_demo.svg" alt="Pure Toastify Demo" width="800" />
+</p>
+
 ---
 
 ## Features ✨
