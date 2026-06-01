@@ -1,0 +1,283 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <style type="text/css">
+      /*<![CDATA[*/
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+      .bg { fill: #0b0f19; }
+      .phone-body { fill: #111827; stroke: #374151; stroke-width: 2; }
+      .phone-screen { fill: #f8fafc; }
+      .notch-bg { fill: #111827; }
+
+      /* Typography */
+      .title-font { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; fill: #f8fafc; }
+      .desc-font { font-family: 'Inter', sans-serif; font-size: 13px; fill: #94a3b8; }
+      .small-font { font-family: 'Inter', sans-serif; font-size: 10px; fill: #475569; font-weight: 600; }
+      .feature-head { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: #e2e8f0; }
+      .feature-body { font-family: 'Inter', sans-serif; font-size: 11px; fill: #64748b; }
+      .badge-font { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+      .code-font { font-family: 'Fira Code', 'Consolas', monospace; font-size: 11px; }
+
+      .header-bar { fill: #6366f1; }
+      .header-text { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: #ffffff; }
+
+      /* Toast design elements */
+      .toast-card { fill: #ffffff; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); stroke: #e2e8f0; stroke-width: 1; }
+      .toast-title { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; fill: #1e293b; }
+      .toast-desc { font-family: 'Inter', sans-serif; font-size: 9px; fill: #64748b; font-weight: 500; }
+      
+      /* Standard App buttons */
+      .btn-success { fill: #10b981; }
+      .btn-error { fill: #ef4444; }
+      .btn-text { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+
+      /* ══════ TIMELINE ANIMATION ══════
+         0s - 1s    : Hold clean screen
+         1s - 1.2s  : Tap Success Button
+         1.2s - 1.6s: Success Toast slides down
+         1.6s - 4.2s: Success Toast displays + progress bar shrinks
+         4.2s - 4.6s: Success Toast swiped to right (PanResponder)
+         4.6s - 5.5s: Hold clean screen
+         5.5s - 5.7s: Tap Error Button
+         5.7s - 6.1s: Error Toast slides down
+         6.1s - 8.7s: Error Toast displays + progress bar shrinks
+         8.7s - 9.1s: Error Toast swiped to right (PanResponder)
+         9.1s - 10s : Hold clean, loop
+      ═════════════════════════════════ */
+
+      /* Success Toast container transform & swipe */
+      @keyframes successToastAnim {
+        0%, 12% { transform: translateY(-70px) translateX(0); opacity: 0; }
+        16% { transform: translateY(0) translateX(0); opacity: 1; }
+        42% { transform: translateY(0) translateX(0); opacity: 1; }
+        46%, 100% { transform: translateY(0) translateX(180px); opacity: 0; }
+      }
+      .success-toast {
+        animation: successToastAnim 10s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+      }
+
+      /* Error Toast container transform & swipe */
+      @keyframes errorToastAnim {
+        0%, 57% { transform: translateY(-70px) translateX(0); opacity: 0; }
+        61% { transform: translateY(0) translateX(0); opacity: 1; }
+        87% { transform: translateY(0) translateX(0); opacity: 1; }
+        91%, 100% { transform: translateY(0) translateX(180px); opacity: 0; }
+      }
+      .error-toast {
+        animation: errorToastAnim 10s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+      }
+
+      /* Shimmering / Shrinking Progress Bar for Success */
+      @keyframes successProgress {
+        0%, 16% { transform: scaleX(1); }
+        42%, 100% { transform: scaleX(0); }
+      }
+      .prog-success {
+        animation: successProgress 10s linear infinite;
+        transform-origin: left;
+      }
+
+      /* Shimmering / Shrinking Progress Bar for Error */
+      @keyframes errorProgress {
+        0%, 61% { transform: scaleX(1); }
+        87%, 100% { transform: scaleX(0); }
+      }
+      .prog-error {
+        animation: errorProgress 10s linear infinite;
+        transform-origin: left;
+      }
+
+      /* Success Button Tap ring */
+      @keyframes tapSuccess {
+        0%, 10% { transform: scale(0); opacity: 0; }
+        12% { transform: scale(1); opacity: 0.6; }
+        14%, 100% { transform: scale(1.6); opacity: 0; }
+      }
+      .ring-success {
+        animation: tapSuccess 10s ease-out infinite;
+        transform-origin: 125px 175px;
+      }
+
+      /* Error Button Tap ring */
+      @keyframes tapError {
+        0%, 55% { transform: scale(0); opacity: 0; }
+        57% { transform: scale(1); opacity: 0.6; }
+        59%, 100% { transform: scale(1.6); opacity: 0; }
+      }
+      .ring-error {
+        animation: tapError 10s ease-out infinite;
+        transform-origin: 125px 235px;
+      }
+
+      /* Swipe Hand Gesture Simulation */
+      @keyframes handSwipe {
+        0%, 41% { transform: translate(190px, 120px) scale(0); opacity: 0; }
+        42% { transform: translate(190px, 120px) scale(1); opacity: 1; }
+        46% { transform: translate(270px, 120px) scale(1); opacity: 0.8; }
+        47%, 86% { transform: translate(190px, 120px) scale(0); opacity: 0; }
+        87% { transform: translate(190px, 120px) scale(1); opacity: 1; }
+        91% { transform: translate(270px, 120px) scale(1); opacity: 0.8; }
+        92%, 100% { transform: translate(190px, 120px) scale(0); opacity: 0; }
+      }
+      .swipe-hand {
+        animation: handSwipe 10s ease-in-out infinite;
+      }
+
+      /* Feature card pulse */
+      @keyframes fpulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      .fp { animation: fpulse 3s ease-in-out infinite; }
+      /*]]>*/
+    </style>
+
+    <filter id="shadow1" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.12" />
+    </filter>
+    <filter id="glow-toast" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.1" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="500" rx="16" ry="16" />
+
+  <!-- Title -->
+  <g transform="translate(30, 40)">
+    <text class="title-font">🚀 react-native-pure-toastify</text>
+    <text class="desc-font" y="24">Highly customizable, 60FPS fluid swipe-to-dismiss toast system for Expo and React Native</text>
+  </g>
+
+  <!-- ════════════ PHONE MOCKUP ════════════ -->
+  <g transform="translate(55, 80)">
+    <!-- Phone body -->
+    <rect class="phone-body" width="250" height="400" rx="28" ry="28" />
+    <!-- Screen -->
+    <rect class="phone-screen" x="10" y="10" width="230" height="380" rx="20" ry="20" />
+    <!-- Notch -->
+    <rect class="notch-bg" x="80" y="10" width="90" height="24" rx="0" ry="0" />
+    <rect class="notch-bg" x="80" y="10" width="90" height="18" rx="0" ry="10" />
+    <!-- Status bar -->
+    <text class="small-font" x="24" y="28">9:41</text>
+    <text class="small-font" x="202" y="28">100%</text>
+
+    <!-- App header -->
+    <rect class="header-bar" x="10" y="34" width="230" height="42" />
+    <text class="header-text" x="24" y="60">Dashboard</text>
+
+    <!-- Screen Content Base View -->
+    <rect fill="#f1f5f9" x="10" y="76" width="230" height="314" rx="0" ry="20" />
+
+    <!-- Mock Screen Layout Elements -->
+    <rect fill="#ffffff" x="24" y="96" width="202" height="44" rx="6" ry="6" />
+    <circle cx="46" cy="118" r="14" fill="#e2e8f0" />
+    <rect fill="#e2e8f0" x="70" y="110" width="90" height="7" rx="3" ry="3" />
+    <rect fill="#e2e8f0" x="70" y="122" width="60" height="5" rx="2" ry="2" />
+
+    <!-- Trigger Buttons -->
+    <!-- Trigger Success -->
+    <circle class="ring-success" cx="125" cy="175" r="14" fill="none" stroke="#10b981" stroke-width="2" />
+    <rect class="btn-success" x="50" y="160" width="150" height="30" rx="6" ry="6" filter="url(#shadow1)" />
+    <text class="btn-text" x="125" y="179">Trigger Success</text>
+
+    <!-- Trigger Error -->
+    <circle class="ring-error" cx="125" cy="235" r="14" fill="none" stroke="#ef4444" stroke-width="2" />
+    <rect class="btn-error" x="50" y="220" width="150" height="30" rx="6" ry="6" filter="url(#shadow1)" />
+    <text class="btn-text" x="125" y="239">Trigger Error</text>
+
+    <!-- ═══ TOAST NOTIFICATION CONTAINER ═══ -->
+    <g transform="translate(20, 86)">
+      <!-- 1. SUCCESS TOAST -->
+      <g class="success-toast">
+        <rect class="toast-card" width="210" height="46" rx="8" ry="8" filter="url(#glow-toast)" />
+        <rect fill="#10b981" x="0" y="0" width="5" height="46" rx="4" ry="4" />
+        <circle cx="22" cy="23" r="10" fill="#ecfdf5" />
+        <text x="17" y="27" font-family="Inter, sans-serif" font-size="12px" fill="#10b981" font-weight="700">✓</text>
+        <text class="toast-title" x="38" y="20">Payment Received!</text>
+        <text class="toast-desc" x="38" y="32">Receipt has been sent to your inbox.</text>
+        <!-- Shrinking Progress Bar -->
+        <rect class="prog-success" fill="#10b981" x="5" y="43" width="205" height="3" rx="1.5" ry="1.5" />
+      </g>
+
+      <!-- 2. ERROR TOAST -->
+      <g class="error-toast">
+        <rect class="toast-card" width="210" height="46" rx="8" ry="8" filter="url(#glow-toast)" />
+        <rect fill="#ef4444" x="0" y="0" width="5" height="46" rx="4" ry="4" />
+        <circle cx="22" cy="23" r="10" fill="#fef2f2" />
+        <text x="18" y="27" font-family="Inter, sans-serif" font-size="12px" fill="#ef4444" font-weight="700">✗</text>
+        <text class="toast-title" x="38" y="20">Payment Declined</text>
+        <text class="toast-desc" x="38" y="32">Please check card details and retry.</text>
+        <!-- Shrinking Progress Bar -->
+        <rect class="prog-error" fill="#ef4444" x="5" y="43" width="205" height="3" rx="1.5" ry="1.5" />
+      </g>
+    </g>
+
+    <!-- ═══ SWIPE HAND ACTION GESTURE OVERLAY ═══ -->
+    <!-- Simulates tapping a card and swiping it quickly to the right -->
+    <g class="swipe-hand" transform="translate(190, 120)">
+      <circle cx="0" cy="0" r="10" fill="none" stroke="#6366f1" stroke-width="2" />
+      <path d="M 0,0 L 5,-12 L 12,-9 L 0,0 Z" fill="#6366f1" />
+    </g>
+  </g>
+
+  <!-- ════════════ RIGHT PANEL: FEATURES ════════════ -->
+  <g transform="translate(355, 90)">
+    <!-- Badges -->
+    <rect x="0" y="0" width="100" height="24" rx="6" ry="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1" />
+    <text class="badge-font" x="8" y="16" fill="#a5b4fc">🍿 PURE APIS</text>
+    <rect x="110" y="0" width="102" height="24" rx="6" ry="6" fill="#1e3a2f" stroke="#059669" stroke-width="1" />
+    <text class="badge-font" x="118" y="16" fill="#6ee7b7">📏 SWIPE TO DISMISS</text>
+
+    <!-- Feature 1 -->
+    <g transform="translate(0, 50)" class="fp">
+      <circle cx="14" cy="10" r="14" fill="#1e1b4b" />
+      <text x="7" y="15" font-family="Inter, sans-serif" font-size="14px">⚡</text>
+      <text class="feature-head" x="36" y="8">60FPS Native Transitions</text>
+      <text class="feature-body" x="36" y="24">Uses native spring animations for ultra-smooth fluid UI rendering</text>
+    </g>
+
+    <!-- Feature 2 -->
+    <g transform="translate(0, 105)" class="fp" style="animation-delay: 0.5s;">
+      <circle cx="14" cy="10" r="14" fill="#0f172a" />
+      <text x="7" y="15" font-family="Inter, sans-serif" font-size="14px">👆</text>
+      <text class="feature-head" x="36" y="8">Swipe-to-Dismiss Gestures</text>
+      <text class="feature-body" x="36" y="24">Pure PanResponder drag mechanics natively enabled</text>
+    </g>
+
+    <!-- Feature 3 -->
+    <g transform="translate(0, 160)" class="fp" style="animation-delay: 1s;">
+      <circle cx="14" cy="10" r="14" fill="#1c1917" />
+      <text x="7" y="15" font-family="Inter, sans-serif" font-size="14px">⏱️</text>
+      <text class="feature-head" x="36" y="8">Shrinking Progress Bar</text>
+      <text class="feature-body" x="36" y="24">A visual indicator tracking exactly when the toast auto-closes</text>
+    </g>
+
+    <!-- Feature 4 -->
+    <g transform="translate(0, 215)" class="fp" style="animation-delay: 1.5s;">
+      <circle cx="14" cy="10" r="14" fill="#064e3b" />
+      <text x="7" y="15" font-family="Inter, sans-serif" font-size="14px">📢</text>
+      <text class="feature-head" x="36" y="8">Imperative Global API</text>
+      <text class="feature-body" x="36" y="24">Instantly trigger toasts from inside or outside standard views</text>
+    </g>
+
+    <!-- Code snippet -->
+    <g transform="translate(0, 280)">
+      <rect fill="#0f172a" width="410" height="100" rx="10" ry="10" stroke="#1e293b" stroke-width="1" />
+      <text class="code-font" x="14" y="22" fill="#64748b">// Trigger a toast anywhere instantly</text>
+      <text class="code-font" x="14" y="40" fill="#c084fc">import</text>
+      <text class="code-font" x="58" y="40" fill="#e2e8f0"> { toast } </text>
+      <text class="code-font" x="136" y="40" fill="#c084fc">from</text>
+      <text class="code-font" x="170" y="40" fill="#fbbf24">'react-native-pure-toastify'</text>
+      <text class="code-font" x="14" y="62" fill="#e2e8f0">toast.</text>
+      <text class="code-font" x="56" y="62" fill="#22d3ee">success</text>
+      <text class="code-font" x="105" y="62" fill="#e2e8f0">(</text>
+      <text class="code-font" x="112" y="62" fill="#4ade80">"Payment Received!"</text>
+      <text class="code-font" x="250" y="62" fill="#e2e8f0">, {</text>
+      <text class="code-font" x="14" y="80" fill="#fbbf24">  description</text>
+      <text class="code-font" x="102" y="80" fill="#e2e8f0">: </text>
+      <text class="code-font" x="114" y="80" fill="#4ade80">"A copy of your receipt has been sent."</text>
+      <text class="code-font" x="14" y="94" fill="#e2e8f0">});</text>
+    </g>
+  </g>
+</svg>
